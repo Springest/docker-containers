@@ -14,6 +14,7 @@ ENV LANG      en_US.UTF-8
 ENV LANGUAGE  en_US.UTF-8
 ENV LC_ALL    en_US.UTF-8
 
+ # Will be 2.3.1 because that is the latest version they packaged
 ENV RUBY_VERSION 2.3
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 && \
