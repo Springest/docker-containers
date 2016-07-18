@@ -1,4 +1,4 @@
-FROM ubuntu-debootstrap:14.04.3
+FROM ubuntu:14.04
 MAINTAINER Tim Flapper <tim@springest.com>
 
 # Inspired by cloudgear ubuntu image (https://github.com/cloudgear-images/ubuntu)
