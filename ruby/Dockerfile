@@ -56,7 +56,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
         openssl \
         python-dev \
         python-pip \
-        phantomjs \
         supervisor && \
 
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
@@ -77,7 +76,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
 
     # Setup Rubygems
     echo 'gem: --no-document' > /etc/gemrc && \
-    gem install bundler && gem update --system
+    gem install bundler && gem update --system && \
+
+    # Intall Phantomjs 2.1.1
+    curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    mv phantomjs-2.1.1-linux-x86_64 /usr/local/share && \
+    ln -sf /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin
 
 RUN pip install awscli
 RUN pip install awsebcli
