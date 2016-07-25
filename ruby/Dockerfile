@@ -17,10 +17,16 @@ ENV LC_ALL    en_US.UTF-8
 ENV RUBY_VERSION 2.1
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 && \
+    echo deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
+    mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
     echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox-ruby-ng-trusty.list && \
+
+    apt-get update -q && apt-get install -yq --no-install-recommends ca-certificates curl && \
+
+    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+
     apt-get update -q && apt-get install -yq --no-install-recommends \
         autoconf \
-        ca-certificates \
         g++ \
         gcc \
         libc6-dev \
@@ -32,7 +38,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
         libffi-dev \
         libglib2.0-dev \
         libncurses-dev \
-        libpq-dev \
         libreadline-dev \
         libsqlite3-dev \
         libssl-dev \
@@ -42,7 +47,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
         zlib1g-dev \
         ruby$RUBY_VERSION \
         ruby$RUBY_VERSION-dev \
-        curl \
         build-essential \
         git \
         imagemagick \
@@ -56,33 +60,20 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
         openssl \
         python-dev \
         python-pip \
-        supervisor && \
-
-    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-
-    echo deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
-
-    mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
-
-    apt-get update -q && apt-get install -yq --no-install-recommends \
+        supervisor \
         postgresql-client-9.4 \
         libpq-dev && \
 
     rm -rf /usr/share/man/man1 && \
-
-    # clean up
-    rm -rf /var/lib/apt/lists/* && \
-    truncate -s 0 /var/log/*log && \
+    rm -rf /usr/share/man/man7 && \
 
     # Setup Rubygems
     echo 'gem: --no-document' > /etc/gemrc && \
     gem install bundler && gem update --system && \
 
-    # Intall Phantomjs 2.1.1
-    curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    mv phantomjs-2.1.1-linux-x86_64 /usr/local/share && \
-    ln -sf /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin
+    # Install AWS CLI
+    pip install awscli awsebcli && \
 
-RUN pip install awscli
-RUN pip install awsebcli
+    # clean up
+    rm -rf /var/lib/apt/lists/* && \
+    truncate -s 0 /var/log/*log
