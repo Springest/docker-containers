@@ -75,6 +75,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     pip install awscli && \
     pip install awsebcli && \
 
+    # Intall Phantomjs 2.1.1
+    curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    mv phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin && \
+    rm -f phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    rm -rf phantomjs-2.1.1-linux-x86_64 && \
+
     # clean up
     rm -rf /var/lib/apt/lists/* && \
     truncate -s 0 /var/log/*log
