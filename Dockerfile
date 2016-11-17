@@ -26,43 +26,43 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
 
     apt-get update -q && apt-get install -yq --no-install-recommends \
-        autoconf \
-        g++ \
-        gcc \
-        libc6-dev \
-        make \
-        patch \
-        libbz2-dev \
-        libcurl4-openssl-dev \
-        libevent-dev \
-        libffi-dev \
-        libglib2.0-dev \
-        libncurses-dev \
-        libreadline-dev \
-        libsqlite3-dev \
-        libssl-dev \
-        libxml2-dev \
-        libxslt-dev \
-        libyaml-dev \
-        zlib1g-dev \
-        ruby$RUBY_VERSION \
-        ruby$RUBY_VERSION-dev \
-        build-essential \
-        git \
-        imagemagick \
-        libjpeg-dev \
-        libmagickcore-dev \
-        libmagickwand-dev \
-        procps \
-        libgdbm-dev \
-        libtidy-dev \
-        libev-dev \
-        openssl \
-        python-dev \
-        python-pip \
-        supervisor \
-        postgresql-client-9.4 \
-        libpq-dev && \
+      autoconf \
+      g++ \
+      gcc \
+      libc6-dev \
+      make \
+      patch \
+      libbz2-dev \
+      libcurl4-openssl-dev \
+      libevent-dev \
+      libffi-dev \
+      libglib2.0-dev \
+      libncurses-dev \
+      libreadline-dev \
+      libsqlite3-dev \
+      libssl-dev \
+      libxml2-dev \
+      libxslt-dev \
+      libyaml-dev \
+      zlib1g-dev \
+      ruby$RUBY_VERSION \
+      ruby$RUBY_VERSION-dev \
+      build-essential \
+      git \
+      imagemagick \
+      libjpeg-dev \
+      libmagickcore-dev \
+      libmagickwand-dev \
+      procps \
+      libgdbm-dev \
+      libtidy-dev \
+      libev-dev \
+      openssl \
+      python-dev \
+      python-pip \
+      supervisor \
+      postgresql-client-9.4 \
+      libpq-dev && \
 
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
