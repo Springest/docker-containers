@@ -72,6 +72,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     gem install bundler && gem update --system && \
 
     # Install AWS CLI
+    python -m pip install -U pip && \
     pip install awscli && \
     pip install awsebcli && \
 
