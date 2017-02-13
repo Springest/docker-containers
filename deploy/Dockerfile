@@ -14,11 +14,25 @@ ENV LANG      en_US.UTF-8
 ENV LANGUAGE  en_US.UTF-8
 ENV LC_ALL    en_US.UTF-8
 
-RUN mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
+ENV RUBY_VERSION 2.3
 
-    apt-get update -q && apt-get install -yq --no-install-recommends \
-      ca-certificates curl \
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 && \
+    echo deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
+    mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
+    echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox-ruby-ng-trusty.list && \
+
+    apt-get update -q && apt-get install -yq --no-install-recommends ca-certificates curl \
+      autoconf \
+      g++ \
+      gcc \
+      libc6-dev \
+      make \
+      patch \
+      ruby$RUBY_VERSION \
+      ruby$RUBY_VERSION-dev \
+      build-essential \
       git \
+      procps \
       python-dev \
       python-pip \
       jq && \

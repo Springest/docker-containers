@@ -58,8 +58,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       libtidy-dev \
       libev-dev \
       openssl \
-      python-dev \
-      python-pip \
       supervisor \
       postgresql-client-9.4 \
       libpq-dev && \
@@ -70,11 +68,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     # Setup Rubygems
     echo 'gem: --no-document' > /etc/gemrc && \
     gem install bundler && gem update --system && \
-
-    # Install AWS CLI
-    python -m pip install -U pip && \
-    pip install awscli && \
-    pip install awsebcli && \
 
     # Intall Phantomjs 2.1.1
     curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
