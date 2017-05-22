@@ -1,14 +1,13 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER Tim Flapper <tim@springest.com>
 
 # Inspired by cloudgear ubuntu image (https://github.com/cloudgear-images/ubuntu)
 # Inspired by cloudgear ruby image (https://github.com/cloudgear-images/ruby)
 
-RUN locale-gen en_US.UTF-8 && \
-    update-locale LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8 && \
-    # Don't install man documents for future packages and remove existing
-    printf "path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*" >> /etc/dpkg/dpkg.cfg.d/nodoc && \
-    cd /usr/share && rm -fr doc/* man/* info/* lintian/*
+RUN printf "path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*" >> /etc/dpkg/dpkg.cfg.d/nodoc && \
+    cd /usr/share && rm -fr doc/* man/* info/* lintian/* && \
+    apt-get update -q && apt-get install -yq --no-install-recommends locales && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 ENV LANG      en_US.UTF-8
 ENV LANGUAGE  en_US.UTF-8
