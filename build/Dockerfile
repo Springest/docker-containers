@@ -25,6 +25,9 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
 
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
 
+    curl https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - && \
+    echo deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main >> /etc/apt/sources.list.d/google.list && \
+
     apt-get update -q && apt-get upgrade -yq --no-install-recommends && \
     apt-get install -yq --no-install-recommends \
       autoconf \
@@ -62,6 +65,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       postgresql-9.4 \
       postgresql-contrib-9.4 \
       postgresql-client-9.4 \
+      unzip \
+      google-chrome-stable \
       libpq-dev && \
 
     rm -rf /usr/share/man/man1 && \
@@ -71,12 +76,10 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     echo 'gem: --no-document' > /etc/gemrc && \
     gem install bundler && gem update --system && \
 
-    # Intall Phantomjs 2.1.1
-    curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    mv phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin && \
-    rm -f phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    rm -rf phantomjs-2.1.1-linux-x86_64 && \
+    curl -OLk https://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip && \
+    unzip chromedriver_linux64.zip && \
+    mv chromedriver /usr/bin/chromedriver && \
+    rm -f chromedriver_linux64.zip && \
 
     # clean up
     rm -rf /var/lib/apt/lists/* && \
