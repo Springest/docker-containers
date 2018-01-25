@@ -59,7 +59,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       libev-dev \
       openssl \
       supervisor \
-      postgresql-client-9.6 \
+      postgresql-client-9.4 \
       libpq-dev && \
 
     rm -rf /usr/share/man/man1 && \
