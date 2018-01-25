@@ -29,6 +29,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     echo deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main >> /etc/apt/sources.list.d/google.list && \
 
     apt-get update -q && apt-get upgrade -yq --no-install-recommends && \
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && \
     apt-get install -yq --no-install-recommends \
       autoconf \
       g++ \
@@ -67,7 +68,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       postgresql-client-9.4 \
       unzip \
       google-chrome-stable \
-      libpq-dev && \
+      libpq-dev \
+      nodejs && \
 
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
@@ -84,6 +86,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     # clean up
     rm -rf /var/lib/apt/lists/* && \
     truncate -s 0 /var/log/*log
+
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 
 RUN mkdir -p /data && chown postgres: /data
 RUN su postgres -c "PGDATA=/data /usr/lib/postgresql/9.4/bin/initdb"
