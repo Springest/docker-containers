@@ -67,7 +67,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
 
     # Setup Rubygems
     echo 'gem: --no-document' > /etc/gemrc && \
-    gem install bundler && gem update --system && \
+    gem install bundler && \
 
     # clean up
     rm -rf /var/lib/apt/lists/* && \
