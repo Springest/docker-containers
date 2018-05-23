@@ -20,10 +20,14 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     echo deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
     echo deb http://nginx.org/packages/ubuntu/ trusty nginx > /etc/apt/sources.list.d/nginx.list && \
     echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox-ruby-ng-trusty.list && \
+    echo deb http://deb.nodesource.com/node_8.x trusty main > /etc/apt/sources.list.d/nodesource.list && \
+    echo deb http://dl.yarnpkg.com/debian/ stable main > /etc/apt/sources.list.d/yarn.list && \
     mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
     apt-get update -q && apt-get install -yq --no-install-recommends ca-certificates curl && \
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     curl https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - && \
+    curl https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add - && \
+    curl https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
     echo deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main >> /etc/apt/sources.list.d/google.list && \
     apt-get update -q && apt-get upgrade -yq --no-install-recommends && \
     apt-get install -yq --no-install-recommends \
@@ -58,11 +62,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       libgdbm-dev \
       libtidy-dev \
       libev-dev \
+      nodejs \
       openssl \
       postgresql-9.4 \
       postgresql-contrib-9.4 \
       postgresql-client-9.4 \
       unzip \
+      yarn \
       google-chrome-stable \
       libpq-dev \
       nginx && \
