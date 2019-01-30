@@ -72,7 +72,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       yarn \
       google-chrome-stable \
       libpq-dev \
-      nginx && \
+      nginx \
+      libjemalloc-dev && \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
     echo 'gem: --no-document' > /etc/gemrc && \
