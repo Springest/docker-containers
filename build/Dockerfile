@@ -86,6 +86,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     rm -rf /var/lib/apt/lists/* && \
     truncate -s 0 /var/log/*log
 
+ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libjemalloc.so.1
+
 RUN mkdir -p /data && chown postgres: /data
 RUN su postgres -c "PGDATA=/data /usr/lib/postgresql/9.4/bin/initdb"
 
