@@ -73,7 +73,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       google-chrome-stable \
       libpq-dev \
       nginx \
-      awscli \
+      python-dev \
       libjemalloc-dev && \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
@@ -85,6 +85,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     unzip chromedriver_linux64.zip && \
     mv chromedriver /usr/bin/chromedriver && \
     rm -f chromedriver_linux64.zip && \
+
+    # Install AWS CLI to local user
+    curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
+    unzip awscli-bundle.zip && \
+    ./awscli-bundle/install -b ~/bin/aws && \
+    rm awscli-bundle.zip && \
+    rm -r awscli-bundle && \
 
     # clean up
     rm -rf /var/lib/apt/lists/* && \
