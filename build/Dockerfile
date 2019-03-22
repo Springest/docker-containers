@@ -73,15 +73,19 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       google-chrome-stable \
       libpq-dev \
       nginx \
+      awscli \
       libjemalloc-dev && \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
     echo 'gem: --no-document' > /etc/gemrc && \
     gem install bundler && \
+
+    # Chromedriver
     curl -OLk https://chromedriver.storage.googleapis.com/2.43/chromedriver_linux64.zip && \
     unzip chromedriver_linux64.zip && \
     mv chromedriver /usr/bin/chromedriver && \
     rm -f chromedriver_linux64.zip && \
+
     # clean up
     rm -rf /var/lib/apt/lists/* && \
     truncate -s 0 /var/log/*log
