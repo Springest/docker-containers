@@ -81,7 +81,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     gem install bundler && \
 
     # Chromedriver
-    curl -OLk https://chromedriver.storage.googleapis.com/2.43/chromedriver_linux64.zip && \
+    curl -OLk https://chromedriver.storage.googleapis.com/73.0.3683.68/chromedriver_linux64.zip && \
     unzip chromedriver_linux64.zip && \
     mv chromedriver /usr/bin/chromedriver && \
     rm -f chromedriver_linux64.zip && \
