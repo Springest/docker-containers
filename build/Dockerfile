@@ -74,7 +74,10 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       libpq-dev \
       nginx \
       python-dev \
-      libjemalloc-dev && \
+      libjemalloc-dev \
+      ghostscript \
+      poppler-utils \
+      tesseract-ocr && \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
     echo 'gem: --no-document' > /etc/gemrc && \
@@ -92,6 +95,9 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     ./awscli-bundle/install -b ~/bin/aws && \
     rm awscli-bundle.zip && \
     rm -r awscli-bundle && \
+
+    # Update ImageMagick policy to allow `convert` to convert PDF files to TIFF for OCR
+    sed -i 's+<policy domain="coder" rights="none" pattern="PDF" />+<policy domain="coder" rights="read" pattern="PDF" />+g' /etc/ImageMagick/policy.xml && \
 
     # clean up
     rm -rf /var/lib/apt/lists/* && \
