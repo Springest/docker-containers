@@ -12,5 +12,5 @@ docker push quay.io/springest/build:2.4.5-4
 ## How to run
 
 ```
-docker run --rm -it qauy.io/springest/build:2.4.5-4 /bin/bash
+docker run --rm -it quay.io/springest/build:2.4.5-4 /bin/bash
 ```
