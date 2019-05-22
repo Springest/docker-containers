@@ -20,12 +20,12 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     echo deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
     mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
     echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox-ruby-ng-trusty.list && \
-
+    \
     apt-get update -q && apt-get upgrade -yq --no-install-recommends && \
     apt-get install -yq --no-install-recommends ca-certificates curl && \
-
+    \
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-
+    \
     apt-get update -q && apt-get install -yq --no-install-recommends \
       autoconf \
       g++ \
@@ -61,15 +61,21 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       supervisor \
       postgresql-client-9.4 \
       libpq-dev \
-      libjemalloc-dev && \
-
+      libjemalloc-dev \
+      ghostscript \
+      poppler-utils \
+      tesseract-ocr && \
+    \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
-
+    \
     # Setup Rubygems
     echo 'gem: --no-document' > /etc/gemrc && \
     gem install bundler && \
-
+    \
+    # Update ImageMagick policy to allow `convert` to convert PDF files to TIFF for OCR
+    sed -i 's+<policy domain="coder" rights="none" pattern="PDF" />+<policy domain="coder" rights="read" pattern="PDF" />+g' /etc/ImageMagick/policy.xml && \
+    \
     # clean up
     rm -rf /var/lib/apt/lists/* && \
     truncate -s 0 /var/log/*log
