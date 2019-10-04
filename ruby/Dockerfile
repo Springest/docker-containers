@@ -27,6 +27,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     apt-get update -q && apt-get upgrade -yq --no-install-recommends && \
 			apt-get install -yq --no-install-recommends \
+      tzdata \
       autoconf \
       g++ \
       gcc \
