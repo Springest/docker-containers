@@ -24,7 +24,7 @@ ENV PATH="/usr/lib/fullstaq-ruby/versions/2.6.5-jemalloc/bin:${PATH}"
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 ABF5BD827BD9BF62 && \
     echo deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
     echo deb http://nginx.org/packages/ubuntu/ bionic nginx > /etc/apt/sources.list.d/nginx.list && \
-    echo deb http://deb.nodesource.com/node_8.x bionic main > /etc/apt/sources.list.d/nodesource.list && \
+    echo deb http://deb.nodesource.com/node_13.x bionic main > /etc/apt/sources.list.d/nodesource.list && \
     echo deb http://dl.yarnpkg.com/debian/ stable main > /etc/apt/sources.list.d/yarn.list && \
     mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
     curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
@@ -33,7 +33,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     curl -s https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main >> /etc/apt/sources.list.d/google.list && \
     apt-get update -q && apt-get upgrade -yq --no-install-recommends && \
-			apt-get install -yq --no-install-recommends \
+      apt-get install -yq --no-install-recommends \
       tzdata \
       autoconf \
       g++ \
@@ -87,7 +87,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     gem install bundler && \
     \
     # Chromedriver
-    curl -sOLk https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip && \
+    export CHROMEDRIVER_VERSION=`curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
+    curl -sOLk https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip && \
     unzip chromedriver_linux64.zip && \
     mv chromedriver /usr/bin/chromedriver && \
     rm -f chromedriver_linux64.zip && \
