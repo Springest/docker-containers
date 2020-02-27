@@ -67,9 +67,9 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       libev-dev \
       nodejs \
       openssl \
-      postgresql-9.4 \
-      postgresql-contrib-9.4 \
-      postgresql-client-9.4 \
+      postgresql-11 \
+      postgresql-contrib-11 \
+      postgresql-client-11 \
       unzip \
       yarn \
       google-chrome-stable \
@@ -108,4 +108,4 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     truncate -s 0 /var/log/*log
 
 RUN mkdir -p /data && chown postgres: /data
-RUN su postgres -c "PGDATA=/data /usr/lib/postgresql/9.4/bin/initdb"
+RUN su postgres -c "PGDATA=/data /usr/lib/postgresql/11/bin/initdb"
