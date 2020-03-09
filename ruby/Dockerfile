@@ -58,7 +58,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       libev-dev \
       openssl \
       supervisor \
-      postgresql-client-9.4 \
+      postgresql-client-11 \
       libpq-dev \
       ghostscript \
       poppler-utils \
