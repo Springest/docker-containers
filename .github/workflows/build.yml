@@ -35,7 +35,7 @@ jobs:
         with:
           push: true
           file: ./ruby/Dockerfile
-          tags: quay.io/springest/build:${{ github.event.release.tag_name }}
+          tags: quay.io/springest/ruby:${{ github.event.release.tag_name }}
       -
         name: Image Digest
         run: |
