@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -q && apt-get install -yq --no-install-recommends ca-certificates apt-transport-https gnupg locales curl && \
     locale-gen en_US.UTF-8 && \
     echo deb https://apt.fullstaqruby.org ubuntu-18.04 main > /etc/apt/sources.list.d/fullstaq-ruby.list && \
-    curl -SLfO https://raw.githubusercontent.com/fullstaq-labs/fullstaq-ruby-server-edition/master/fullstaq-ruby.asc && \
+    curl -SLfO https://raw.githubusercontent.com/fullstaq-labs/fullstaq-ruby-server-edition/main/fullstaq-ruby.asc && \
     apt-key add fullstaq-ruby.asc && \
     apt update && \
     apt-get install -yq --no-install-recommends fullstaq-ruby-2.6.5-jemalloc
