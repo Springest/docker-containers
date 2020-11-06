@@ -26,8 +26,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./build
-          file: Dockerfile
+          file: ./build/Dockerfile
           tags: quay.io/springest/build:${{ github.event.release.tag_name }}
       -
         name: Build and push ruby container
@@ -35,8 +34,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./ruby
-          file: Dockerfile
+          file: ./ruby/Dockerfile
           tags: quay.io/springest/build:${{ github.event.release.tag_name }}
       -
         name: Image Digest
