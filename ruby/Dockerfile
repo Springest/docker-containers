@@ -63,8 +63,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       ghostscript \
       poppler-utils \
       tesseract-ocr \
-      clamav \
-      clamav-daemon && \
+      clamav-daemon \
+      clamdscan && \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
     \
