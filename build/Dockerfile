@@ -78,15 +78,9 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       python-dev \
       ghostscript \
       poppler-utils \
-      tesseract-ocr \
-      clamav-daemon \
-      clamdscan && \
+      tesseract-ocr && \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
-    # adding clamav socket directory to allow clamd to start without using a service
-    mkdir -p  /run/clamav && \
-    chown clamav /run/clamav && \
-    \
     # Setup Rubygems
     echo 'gem: --no-document' > /etc/gemrc && \
     gem install bundler && \

@@ -67,6 +67,11 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       clamdscan && \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
+    # clamav is configured in local mode by default, disabling LocalSocket and adding TCPAddr to move it into networked mode
+    sed -i 's/^\bLocalSocket\b/#&/g' /etc/clamav/clamd.conf && \
+    echo "TCPSocket 3310" >> /etc/clamav/clamd.conf && \
+    echo "TCPAddr 10.21.4.150" >> /etc/clamav/clamd.conf && \
+    echo "TCPAddr 10.21.5.150" >> /etc/clamav/clamd.conf && \
     # adding clamav socket directory to allow clamd to start without using a service
     mkdir -p  /run/clamav && \
     chown clamav /run/clamav && \
