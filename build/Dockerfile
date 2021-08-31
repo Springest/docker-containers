@@ -16,10 +16,10 @@ RUN apt-get update -q && apt-get install -yq --no-install-recommends ca-certific
     curl -SLfO https://raw.githubusercontent.com/fullstaq-labs/fullstaq-ruby-server-edition/main/fullstaq-ruby.asc && \
     apt-key add fullstaq-ruby.asc && \
     apt update && \
-    apt-get install -yq --no-install-recommends fullstaq-ruby-2.6.5-jemalloc
+    apt-get install -yq --no-install-recommends fullstaq-ruby-2.7.4-jemalloc
 
 # Pick up new ruby/gem binaries
-ENV PATH="/usr/lib/fullstaq-ruby/versions/2.6.5-jemalloc/bin:${PATH}"
+ENV PATH="/usr/lib/fullstaq-ruby/versions/2.7.4-jemalloc/bin:${PATH}"
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 ABF5BD827BD9BF62 && \
     echo deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
@@ -75,7 +75,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       google-chrome-stable \
       libpq-dev \
       nginx \
-      python-dev \
+      python3-dev \
       ghostscript \
       poppler-utils \
       tesseract-ocr && \
@@ -85,12 +85,11 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     echo 'gem: --no-document' > /etc/gemrc && \
     gem install bundler && \
     \
-    # Install AWS CLI to local user
-    curl -s "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
-    unzip awscli-bundle.zip && \
-    ./awscli-bundle/install -b ~/bin/aws && \
-    rm awscli-bundle.zip && \
-    rm -r awscli-bundle && \
+    curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm awscliv2.zip && \
+    rm -r aws && \
     \
     # Update ImageMagick policy to allow `convert` to convert PDF files to TIFF for OCR
     sed -i 's+<policy domain="coder" rights="none" pattern="PDF" />+<policy domain="coder" rights="read" pattern="PDF" />+g' /etc/ImageMagick-6/policy.xml && \
