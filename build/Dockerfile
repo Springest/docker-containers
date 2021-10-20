@@ -66,6 +66,17 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       libtidy-dev \
       libev-dev \
       nodejs \
+      libgtk2.0-0 \
+      libgtk-3-0 \
+      libgbm-dev \
+      libnotify-dev \
+      libgconf-2-4 \
+      libnss3 \
+      libxss1 \
+      libasound2 \
+      libxtst6 \
+      xauth \
+      xvfb \
       openssl \
       postgresql-11 \
       postgresql-contrib-11 \
@@ -75,10 +86,11 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       google-chrome-stable \
       libpq-dev \
       nginx \
-      python-dev \
+      python3-dev \
       ghostscript \
       poppler-utils \
       tesseract-ocr && \
+    update-alternatives --install /usr/local/bin/python python /usr/bin/python3 40 && \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
     # Setup Rubygems
