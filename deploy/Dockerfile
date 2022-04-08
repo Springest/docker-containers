@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Tim Flapper <tim@springest.com>
+LABEL maintainer="Springest <developers@springest.com>"
 
 # Inspired by cloudgear ubuntu image (https://github.com/cloudgear-images/ubuntu)
 # Inspired by cloudgear ruby image (https://github.com/cloudgear-images/ruby)
@@ -20,7 +20,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
     echo deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
     mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
     echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox-ruby-ng-trusty.list && \
-
     apt-get update -q && apt-get install -yq --no-install-recommends ca-certificates curl \
       autoconf \
       g++ \
@@ -36,16 +35,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       python-dev \
       python-pip \
       jq && \
-
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
-
     # Install AWS CLI
     python -m pip install -U pip && \
     pip install -U six && \
     pip install awscli && \
     pip install awsebcli && \
-
     # clean up
     rm -rf /var/lib/apt/lists/* && \
     truncate -s 0 /var/log/*log
