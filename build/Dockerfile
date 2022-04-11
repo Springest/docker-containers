@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER Springest <developers@springest.com>
+LABEL maintainer="Springest <developers@springest.com>"
 
 RUN printf "path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*" >> /etc/dpkg/dpkg.cfg.d/nodoc && \
     cd /usr/share && rm -fr doc/* man/* info/* lintian/*
@@ -16,10 +16,10 @@ RUN apt-get update -q && apt-get install -yq --no-install-recommends ca-certific
     curl -SLfO https://raw.githubusercontent.com/fullstaq-labs/fullstaq-ruby-server-edition/main/fullstaq-ruby.asc && \
     apt-key add fullstaq-ruby.asc && \
     apt update && \
-    apt-get install -yq --no-install-recommends fullstaq-ruby-2.6.5-jemalloc
+    apt-get install -yq --no-install-recommends fullstaq-ruby-2.7.5-jemalloc
 
 # Pick up new ruby/gem binaries
-ENV PATH="/usr/lib/fullstaq-ruby/versions/2.6.5-jemalloc/bin:${PATH}"
+ENV PATH="/usr/lib/fullstaq-ruby/versions/2.7.5-jemalloc/bin:${PATH}"
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 ABF5BD827BD9BF62 && \
     echo deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
