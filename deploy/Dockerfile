@@ -17,7 +17,7 @@ ENV LC_ALL    en_US.UTF-8
 ENV RUBY_VERSION 2.4
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 && \
-    echo deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
+    echo deb https://apt-archive.postgresql.org/pub/repos/apt/ trusty-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
     mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
     echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox-ruby-ng-trusty.list && \
     apt-get update -q && apt-get install -yq --no-install-recommends ca-certificates curl \
@@ -32,16 +32,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 &
       build-essential \
       git \
       procps \
-      python-dev \
-      python-pip \
+      python3-dev \
+      python3-pip \
       jq && \
     rm -rf /usr/share/man/man1 && \
     rm -rf /usr/share/man/man7 && \
     # Install AWS CLI
-    python -m pip install -U pip && \
-    pip install -U six && \
-    pip install awscli && \
-    pip install awsebcli && \
+    pip3 install awscli && \
     # clean up
     rm -rf /var/lib/apt/lists/* && \
     truncate -s 0 /var/log/*log

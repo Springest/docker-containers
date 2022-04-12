@@ -75,7 +75,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
       google-chrome-stable \
       libpq-dev \
       nginx \
-      python-dev \
+      python3-dev \
+      python3-pip \
       ghostscript \
       poppler-utils \
       tesseract-ocr && \
@@ -86,11 +87,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 A
     gem install bundler && \
     \
     # Install AWS CLI to local user
-    curl -s "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
-    unzip awscli-bundle.zip && \
-    ./awscli-bundle/install -b ~/bin/aws && \
-    rm awscli-bundle.zip && \
-    rm -r awscli-bundle && \
+    pip3 install awscli && \
     \
     # Update ImageMagick policy to allow `convert` to convert PDF files to TIFF for OCR
     sed -i 's+<policy domain="coder" rights="none" pattern="PDF" />+<policy domain="coder" rights="read" pattern="PDF" />+g' /etc/ImageMagick-6/policy.xml && \
