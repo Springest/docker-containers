@@ -1,0 +1,96 @@
+FROM ubuntu:20.04
+LABEL maintainer="Springest <developers@springest.com>"
+
+RUN printf "path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*" >> /etc/dpkg/dpkg.cfg.d/nodoc && \
+    cd /usr/share && rm -fr doc/* man/* info/* lintian/*
+
+ENV LANG      en_US.UTF-8
+ENV LANGUAGE  en_US.UTF-8
+ENV LC_ALL    en_US.UTF-8
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update -q && apt-get install -yq --no-install-recommends ca-certificates apt-transport-https gnupg locales curl ruby && \
+    locale-gen en_US.UTF-8 && \
+    echo deb [arch=amd64] https://apt.fullstaqruby.org ubuntu-20.04 main > /etc/apt/sources.list.d/fullstaq-ruby.list
+
+RUN curl -SLfo /etc/apt/trusted.gpg.d/fullstaq-ruby.asc https://raw.githubusercontent.com/fullstaq-ruby/server-edition/main/fullstaq-ruby.asc && \
+    apt update
+RUN apt install -yq --no-install-recommends fullstaq-ruby-3.0.6-jemalloc
+
+RUN rm /etc/apt/sources.list.d/fullstaq-ruby.list
+
+ENV PATH="/usr/lib/fullstaq-ruby/versions/3.0.6-jemalloc/bin:${PATH}"
+
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C3173AA6 && \
+    echo deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main > /etc/apt/sources.list.d/pgdg.list && \
+    mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7 && \
+    curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    apt-get update -q && apt-get upgrade -yq --no-install-recommends && \
+			apt-get install -yq --no-install-recommends \
+      tzdata \
+      autoconf \
+      g++ \
+      gcc \
+      libc6-dev \
+      make \
+      patch \
+      libbz2-dev \
+      libcurl4-openssl-dev \
+      libevent-dev \
+      libffi-dev \
+      libglib2.0-dev \
+      libncurses-dev \
+      libreadline-dev \
+      libsqlite3-dev \
+      libssl-dev \
+      libxml2-dev \
+      libxslt-dev \
+      libyaml-dev \
+      zlib1g-dev \
+      build-essential \
+      imagemagick \
+      libjpeg-dev \
+      libmagickcore-dev \
+      libmagickwand-dev \
+      procps \
+      libgdbm-dev \
+      libtidy-dev \
+      libev-dev \
+      openssl \
+      supervisor \
+      postgresql-client-11 \
+      libpq-dev \
+      ghostscript \
+      poppler-utils \
+      tesseract-ocr \
+      clamav-daemon \
+      git \
+      clamdscan && \
+    rm -rf /usr/share/man/man1 && \
+    rm -rf /usr/share/man/man7 && \
+    # clamav is configured in local mode by default, disabling LocalSocket and adding TCPAddr to move it into networked mode
+    sed -i 's/^\bLocalSocket\b/#&/g' /etc/clamav/clamd.conf && \
+    echo "TCPSocket 3310" >> /etc/clamav/clamd.conf && \
+    echo "TCPAddr 10.21.4.150" >> /etc/clamav/clamd.conf && \
+    echo "TCPAddr 10.21.5.150" >> /etc/clamav/clamd.conf && \
+    # adding clamav socket directory to allow clamd to start without using a service
+    mkdir -p  /run/clamav && \
+    chown clamav /run/clamav && \
+    \
+    # Setup Rubygems
+    echo 'gem: --no-document' > /etc/gemrc && \
+    gem install bundler -v 2.4.6 && \
+    \
+    # Update ImageMagick policy to allow `convert` to convert PDF files to TIFF for OCR
+    sed -i 's+<policy domain="coder" rights="none" pattern="PDF" />+<policy domain="coder" rights="read" pattern="PDF" />+g' /etc/ImageMagick-6/policy.xml && \
+    \
+    # clean up
+    rm -rf /var/lib/apt/lists/* && \
+    truncate -s 0 /var/log/*log
+
+ENV NODE_OPTIONS=--no-deprecation
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g npm@9 && \
+    npm install -g yarn
